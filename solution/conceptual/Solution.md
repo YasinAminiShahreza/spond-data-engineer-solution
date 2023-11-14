@@ -27,26 +27,26 @@ Data Bricks: It is built on top of Apache Spark and designed to simplify the pro
 
 Azure Batch Serice: This is partially managed VM that you have more control on the underlying OS than Data Bricks and Azure Fucntions. This gives you the highest freedom of language, operarion and dependecnies configuration. This freedom comes with a cost of having to maintain the servers including updates, patching and security monitoring.
 
-Note: Azure Snyapse Analytcs is a ceterlized service relaesed recently that can inbedd multiple solutions from injestion to processing and providing data warehouse with dedicated SQL pools.
+Note: Azure Snyapse Analytcs is a ceterlized service relaesed recently that can embed multiple solutions from injestion to processing and providing data warehouse with dedicated SQL pools.
 
 
 # Netowrk Issues on the data processing?:
 
-There might many different network issues you face during data processing. These could be firewalls issues which are the most comman, packet delivery(using UDP protocols), assiging networks, subnets and gateways and might be some times latency (this can be by bandwidth, physical issues like sharp angle in the Fiber optics cables and etc)
+There might many different network issues you face during data processing. These could be firewalls issues which are the most comman, packet delivery(using UDP protocols), assiging networks, subnets and gateways and might be sometimes latency (this can be by bandwidth, physical issues like sharp angle in the Fiber optics cables and etc)
 
 # Costs:
-There factors on how to control the costs such as administrative managments, how much an application is bussines crytical, In case of batch jobs, how often you want to run them and etc.
-For example for a scenrario that you might want to run parralle batch jobs often(multiple times during the day), you might wanna use Batch service or in other words dedicated vm's with reserved instances to save costs. You can reserve CPU and storage in advance for 1 - 3 years contract and it can save up to 50% compareed to running the code on instant intances. 
+There factors on how to control the costs such as administrative managments, how much an application is bussines critical, In case of batch jobs, how often you want to run them and etc.
+For example for a scenrario that you might want to run parrallel batch jobs often(multiple times during the day), you might wanna use Batch service or in other words dedicated vm's with reserved instances to save costs. You can reserve CPU and storage in advance for 1 - 3 years contract and it can save up to 50% compareed to running the code on instant intances. 
 
 # Pro tip:
-Both running stream and batch services, you might wanna use your own costumized image, you can build your image via github actions only if dependenices has changed, and restore in the container registries for your machine configuration that supposed to run your code. Similaroty, you make your Kuberetes clusters by loading the verified image from either github/Azure registeris into your Dockerfile. 
+Both running stream and batch services, you might wanna use your own costumized image, you can build your image via github actions only if dependenices has changed, and restore in the container registries for your machine configuration that supposed to run your code. Similarly, you make your Kubernetes clusters by loading the verified image from either github/Azure registeris into your Dockerfile. 
 
 
 ## Question 1.2 - Data transformation and cleaning
 
 As I mentioned above, the most commona ways of Data processing in Azure is Azure Data Factory on the module of Data Flow for the simple logic transformation.Azure Data Flow of Data Factory provides a easy to use UI to control and monitor the data flow and quality for simple transforamtion.For more complex operations Data Bricks, Batch services, Azure functions or simply a virtual machine for complex code based processing and transforamtion. 
 
-SPARK and MapReduce are the most common framework for big data analysis. SPARK is the most recent technology and can handle wider variaty of data types and it supports not only HDFS but also data stored in variaty of formats including Cassandra and blob storage and Data lakes.(S3 buckets). It is also X100 fatser than MR and it does the calcualtion mostly in the memory but it can spill into the disk if memoery fills up. The core of SPARK is RDD in which the opeartions are lazy evaluated.
+SPARK and MapReduce are the most common framework for big data analysis. SPARK is the most recent technology and can handle wider variaty of data types and it supports not only HDFS but also data stored in variaty of formats including Cassandra and blob storage and Data lakes.(S3 buckets in AWS). It is also X100 fatser than MR and it does the calcualtion mostly in the memory but it can spill into the disk if memoery fills up. The core of SPARK is RDD in which the opeartions are lazy evaluated.
 Worth to mention that MapReduce only allows computation on the HDFS files and Task tracker dedicates CPU and RAM for executions.
 
 For Schema evolution, mostly the documetation and Schema versioning are the first choice. Using structured databases like SQL ensures that the data are consitent but on the other hand there are more works to be done to define new Schemas in case of further evolution. Some examples of data quality issues can be missing values, duplicated rows, wrong Schema definition (int, float and string) and the solution for most of them are creating logs of data that don't pass consitency tests and go through them manually or programmatically. Consistency tests can be code snippits that verify the end result before loading them into a data Warehouse during ETL operations. 
