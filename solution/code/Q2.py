@@ -37,10 +37,22 @@ def database_update(current_profiles, new_profiles):
     updated_users_id = old_users[~old_users['email'].isin(
         current_profiles['email'])]['profile_id']
 
+    old_updated_users = current_profiles['profile_id'].isin(updated_users_id)
+
+    old_updated_users_df = current_profiles[old_updated_users]
+
     # performing a merge to get the valid_from and valid_to data from prodile_history
     # in tis case the update citeria is email but we can have a pipeline
     updated_users_df = pd.merge(old_users, current_profiles[[
                                 'profile_id', 'valid_to', 'valid_from']], on='profile_id', how='left')
+
+ # binding the rows for the new users and old emails of previous users
+
+    new_profiles_df = pd.concat(
+        [updated_users_df, old_updated_users_df], ignore_index=True)
+
+    # VERIFY
+    # new_profiles_df[new_profiles_df['profile_id'] == 1001]
 
     # as the question asked to keep both the orignial table and the updated rows, we do a simple
     # concatination on binding rows
@@ -48,13 +60,14 @@ def database_update(current_profiles, new_profiles):
     return (
         ("Updated profilesID: ", updated_users_id),
         ("Deleted profilesID: ", deleted_users_id),
-        ("Updated dataframe:", updated_users_df)
+        ("Updated dataframe:", new_profiles_df)
     )
-
 
 # we first read the data. The current data for the profile has
 # Valid_from and valid_to columns
 # I assume that the profile_id is the unique key
+
+
 current_profiles = pd.read_json(
     "../../datalake/profiles_history/profiles_history.json", lines=True
 )  # at t=0
