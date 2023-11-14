@@ -1,5 +1,5 @@
 ## Question 1.1 - Data ingestion
-As it's been some time that I haven't used AWS and they can evolve over time, and there might be updates or changes since then. For this reason, to make sure my answers are accurate, I assume the cloud providers is Microsoft Azure. 
+As it's been some time that I haven't used AWS and it can evolve over time and there might be updates or changes since then. For this reason, to make sure my answers are accurate, I assume the cloud providers is Microsoft Azure. 
 
 The operation of data injestion can be either of the following forms. Either real-time injestion or Batch Injestion.
 
